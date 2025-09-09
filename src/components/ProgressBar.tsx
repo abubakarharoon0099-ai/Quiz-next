@@ -25,17 +25,17 @@ export default function ProgressBar({
           <span>Score: {scorePercent.toFixed(0)}%</span>
           <span>Max Score: {maxScorePercent.toFixed(0)}%</span>
         </div>
-        <div className="w-full bg-white h-8 relative rounded-md border border-black">
+        <div className="w-full z-40  bg-white h-8 relative rounded-md border overflow-hidden border-black">
           <div
-            className="bg-gray-200 h-full absolute top-0 left-0"
+            className="bg-gray-200 z-10 rounded-tl-md rounded-bl-md h-full absolute top-0 left-0"
             style={{ width: `${maxScorePercent}%` }}
           />
           <div
-            className="bg-gray-400 h-full absolute top-0 left-0"
+            className="bg-gray-400 h-full absolute rounded-tl-md rounded-bl-md top-0 z-10 left-0"
             style={{ width: `${averageScorePercent}%` }}
           />
           <div
-            className="bg-gray-800 h-full absolute top-0 left-0"
+            className="bg-gray-800 h-full absolutez-1 rounded-tl-md rounded-bl-md z-10  top-0 left-0"
             style={{ width: `${scorePercent}%` }}
           />
         </div>

@@ -26,9 +26,14 @@ export default function QuizPage() {
     fetchQuestions()
   }, [])
 
-  if (questions.length === 0) {
-    return <p className="text-center mt-10">Loading questions...</p>
-  }
+ if (questions.length === 0) {
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
+    </div>
+  )
+}
+
 
   const current = questions[state.currentIndex]
 
@@ -50,7 +55,7 @@ export default function QuizPage() {
 
   return (
     <div className="relative h-screen flex flex-col items-center justify-center p-4">
-      <div className="relative flex flex-col justify-between gap-8 md:w-2xl max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-gray-400 shadow-2xl min-h-[80vh] overflow-y-auto">
+      <div className="relative flex flex-col justify-between gap-8 md:w-2xl max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-gray-400 shadow-2xl  overflow-y-auto">
         {state.showResult ? (
           <ResultScreen score={state.score} total={questions.length} />
         ) : (
