@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect,  useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Question = {
@@ -13,9 +13,9 @@ type Question = {
 };
 
 type Option = {
-  id: string;          // stable id for keying / selection
-  label: string;       // decoded text shown to user
-  isCorrect: boolean;  // ground-truth flag
+  id: string;          
+  label: string;       
+  isCorrect: boolean;  
 };
 
 type PreparedQuestion = {
@@ -26,7 +26,6 @@ type PreparedQuestion = {
   options: Option[];
 };
 
-// ---------- helpers ----------
 const decodeSafe = (s: string) => {
   try {
     return decodeURIComponent(s);
@@ -35,7 +34,7 @@ const decodeSafe = (s: string) => {
   }
 };
 
-// Fisher–Yates shuffle (pure, stable input -> random output, called once)
+
 function shuffle<T>(arr: T[]): T[] {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -60,12 +59,12 @@ function prepareQuestions(raw: Question[]): PreparedQuestion[] {
       type: q.type,
       difficulty: q.difficulty,
       question: decodeSafe(q.question),
-      options: shuffle(options), // shuffle ONCE per question
+      options: shuffle(options), 
     };
   });
 }
 
-// stars under the category (easy=1, medium=2, hard=3)
+
 function DifficultyStars({ level }: { level: "easy" | "medium" | "hard" }) {
   const count = level === "hard" ? 3 : level === "medium" ? 2 : 1;
   return (
@@ -88,7 +87,6 @@ function DifficultyStars({ level }: { level: "easy" | "medium" | "hard" }) {
   );
 }
 
-// ---------- page ----------
 export default function QuizPage() {
   const router = useRouter();
 
@@ -111,7 +109,6 @@ export default function QuizPage() {
 
   const current = questions[currentIndex];
 
-  // progress
   const progress = ((currentIndex + 1) / questions.length) * 100;
   const scorePercent = (score / questions.length) * 100;
   const maxScorePercent =
@@ -119,10 +116,10 @@ export default function QuizPage() {
   const averageScorePercent = attempted > 0 ? (score / attempted) * 100 : 0;
 
   const handleAnswer = (opt: Option) => {
-    if (selectedOptionId) return; // already answered
+    if (selectedOptionId) return; 
     setSelectedOptionId(opt.id);
     setAttempted((a) => a + 1);
-    if (opt.isCorrect) setScore((s) => s + 1); // **truth-based, no string compare**
+    if (opt.isCorrect) setScore((s) => s + 1); 
   };
 
   const handleNext = () => {
@@ -136,7 +133,6 @@ export default function QuizPage() {
 
   return (
     <div className="relative h-screen flex flex-col items-center justify-center p-4">
-      {/* top progress (always) */}
       <div className="absolute top-0 w-full bg-white h-4 mb-8">
         <div
           className="bg-gray-500 h-4 transition-all duration-300"
@@ -174,7 +170,7 @@ export default function QuizPage() {
           </div>
         ) : (
           <div className="flex flex-col gap-4">
-            {/* header */}
+            
             <div className="mb-4">
               <h2 className="text-3xl font-semibold text-gray-700">
                 Question {currentIndex + 1} of {questions.length}
@@ -211,7 +207,6 @@ export default function QuizPage() {
               ))}
             </div>
 
-            {/* feedback + next */}
             {selectedOptionId && (
               <div className="flex flex-col items-center gap-8">
                 <p className="text-3xl font-semibold">
@@ -233,26 +228,21 @@ export default function QuizPage() {
           </div>
         )}
 
-        {/* bottom progress (hidden on result) */}
         {!showResult && (
           <div className="w-full mx-auto">
             <div className="flex justify-between mb-1 font-semibold">
               <span>Score: {scorePercent.toFixed(0)}%</span>
-              {/* <span>Average: {averageScorePercent.toFixed(0)}%</span> */}
               <span>Max Score: {maxScorePercent.toFixed(0)}%</span>
             </div>
             <div className="w-full bg-white h-8 relative rounded-md border border-black">
-              {/* Max (light) */}
               <div
                 className="bg-gray-200 h-full absolute top-0 left-0"
                 style={{ width: `${maxScorePercent}%` }}
               />
-              {/* Average (medium) */}
               <div
                 className="bg-gray-400 h-full absolute top-0 left-0"
                 style={{ width: `${averageScorePercent}%` }}
               />
-              {/* Actual (dark) */}
               <div
                 className="bg-gray-800 h-full absolute top-0 left-0"
                 style={{ width: `${scorePercent}%` }}
