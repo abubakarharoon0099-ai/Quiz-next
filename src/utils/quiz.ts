@@ -7,7 +7,6 @@ export function decodeSafe(s: string): string {
     return s
   }
 }
-
 export function shuffle<T>(arr: T[]): T[] {
   const a = arr.slice()
   for (let i = a.length - 1; i > 0; i--) {
@@ -16,7 +15,6 @@ export function shuffle<T>(arr: T[]): T[] {
   }
   return a
 }
-
 export function prepareQuestions(raw: Question[]): PreparedQuestion[] {
   return raw.map((q, qi) => {
     const options: Option[] = [
@@ -27,7 +25,6 @@ export function prepareQuestions(raw: Question[]): PreparedQuestion[] {
         isCorrect: false
       }))
     ]
-
     return {
       category: decodeSafe(q.category),
       type: q.type,

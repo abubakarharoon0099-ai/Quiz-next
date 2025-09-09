@@ -1,5 +1,4 @@
 "use client"
-
 import { useRouter } from "next/navigation"
 
 export default function ResultScreen({
@@ -11,15 +10,10 @@ export default function ResultScreen({
 }) {
   const router = useRouter()
   const scorePercent = (score / total) * 100
-
   const handleGoHome = () => {
-    // Clear saved quiz state
     localStorage.removeItem("quizState")
-
-    // Navigate directly home
     router.push("/")
   }
-
   return (
   
       <div className="flex flex-col gap-6 items-center text-center bg-white ">
@@ -40,7 +34,6 @@ export default function ResultScreen({
             Sorry! You Failed. Better luck next time 😊
           </p>
         )}
-
         <button
           onClick={handleGoHome}
           className="text-sm sm:text-base md:text-lg lg:text-xl font-[400] 
@@ -50,6 +43,5 @@ export default function ResultScreen({
           Go to Home
         </button>
       </div>
-    
   )
 }

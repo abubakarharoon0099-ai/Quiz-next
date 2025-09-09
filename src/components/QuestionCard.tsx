@@ -1,6 +1,5 @@
 import { PreparedQuestion, Option } from "@/types/quiz"
 import DifficultyStars from "./DifficultyStars"
-
 export default function QuestionCard({
   question,
   currentIndex,
