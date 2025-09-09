@@ -54,7 +54,7 @@ export default function QuizPage() {
   }
 
   return (
-    <div className="relative h-screen flex flex-col items-center justify-center p-4">
+    <div className="relative h-100% min-h-[100vh] h-screen flex flex-col items-center justify-center p-12">
       <div className="relative flex flex-col justify-between gap-8 md:w-2xl max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-gray-400 shadow-2xl  overflow-y-auto">
         {state.showResult ? (
           <ResultScreen score={state.score} total={questions.length} />
