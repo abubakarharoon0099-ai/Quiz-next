@@ -10,7 +10,6 @@ import ProgressBar from "@/components/ProgressBar"
 
 export default function QuizPage() {
   const [questions, setQuestions] = useState<PreparedQuestion[]>([])
-
   const [state, dispatch] = useReducer(quizReducer, initialState)
 
 useEffect(() => {
@@ -48,18 +47,19 @@ const fetchQuestions = async () => {
     const data: Question[] = await res.json()
     setQuestions(prepareQuestions(data))
   } catch (err: unknown) {
-  console.error(err)
-
-  if (err instanceof Error) {
-    dispatch({ type: "SET_ERROR", error: err.message })
-  } else if (typeof err === "string") {
-    dispatch({ type: "SET_ERROR", error: err })
-  } else {
-    dispatch({ type: "SET_ERROR", error: "Something went wrong" })
+    console.error(err)
+    if (err instanceof Error) {
+      dispatch({ type: "SET_ERROR", error: err.message })
+    } else if (typeof err === "string") {
+      dispatch({ type: "SET_ERROR", error: err })
+    } else {
+      dispatch({ type: "SET_ERROR", error: "Something went wrong" })
+    }
+  } finally {
+    dispatch({ type: "SET_LOADING", loading: false }) 
   }
 }
 
-}
 
 
   useEffect(() => {
@@ -88,8 +88,8 @@ const fetchQuestions = async () => {
   }
   if (questions.length === 0) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-600">No questions available</p>
+        <div className="flex items-center justify-center h-screen">
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
       </div>
     )
   }

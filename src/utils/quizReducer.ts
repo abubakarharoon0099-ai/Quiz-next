@@ -6,8 +6,8 @@ export const initialState: QuizState = {
   attempted: 0,
   selectedOptionId: null,
   showResult: false,
-  loading: false,     
-  error: null,       
+  loading: false,   // ✅ add
+  error: null       // ✅ add
 }
 
 export function quizReducer(state: QuizState, action: QuizAction): QuizState {
@@ -20,7 +20,6 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         attempted: state.attempted + 1,
         score: action.isCorrect ? state.score + 1 : state.score,
       }
-
     case "NEXT":
       return {
         ...state,
@@ -28,19 +27,14 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         currentIndex: state.currentIndex + 1,
         showResult: state.currentIndex + 1 >= action.total,
       }
-
     case "RESTART":
       return { ...initialState }
-
     case "HYDRATE":
       return { ...state, ...action.payload }
-
-    case "SET_LOADING":
+    case "SET_LOADING":   // ✅ handle
       return { ...state, loading: action.loading }
-
-    case "SET_ERROR":
+    case "SET_ERROR":     // ✅ handle
       return { ...state, error: action.error }
-
     default:
       return state
   }
