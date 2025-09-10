@@ -1,4 +1,3 @@
-// src/utils/quizReducer.ts
 import { QuizState, QuizAction } from "@/types/quizState"
 
 export const initialState: QuizState = {
@@ -7,8 +6,8 @@ export const initialState: QuizState = {
   attempted: 0,
   selectedOptionId: null,
   showResult: false,
-  loading: true,     
-  error: null         
+  loading: false,     
+  error: null,       
 }
 
 export function quizReducer(state: QuizState, action: QuizAction): QuizState {
@@ -36,10 +35,10 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
     case "HYDRATE":
       return { ...state, ...action.payload }
 
-    case "SET_LOADING":  
+    case "SET_LOADING":
       return { ...state, loading: action.loading }
 
-    case "SET_ERROR":     
+    case "SET_ERROR":
       return { ...state, error: action.error }
 
     default:

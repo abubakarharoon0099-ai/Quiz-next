@@ -47,12 +47,18 @@ const fetchQuestions = async () => {
     if (!res.ok) throw new Error("Failed to fetch questions")
     const data: Question[] = await res.json()
     setQuestions(prepareQuestions(data))
-  } catch (err: any) {
-    console.error(err)
-    dispatch({ type: "SET_ERROR", error: err.message || "Something went wrong" })
-  } finally {
-    dispatch({ type: "SET_LOADING", loading: false })
+  } catch (err: unknown) {
+  console.error(err)
+
+  if (err instanceof Error) {
+    dispatch({ type: "SET_ERROR", error: err.message })
+  } else if (typeof err === "string") {
+    dispatch({ type: "SET_ERROR", error: err })
+  } else {
+    dispatch({ type: "SET_ERROR", error: "Something went wrong" })
   }
+}
+
 }
 
 
