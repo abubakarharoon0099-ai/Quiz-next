@@ -14,7 +14,12 @@ export default function QuestionCard({
   selectedOptionId: string | null
   handleAnswer: (opt: Option) => void
   handleNext: () => void
-}) {
+}) 
+{
+  let decodedCategory = decodeURIComponent(question.category)
+  if (!decodedCategory.toLowerCase().includes("entertainment")) {
+    decodedCategory = `Entertainment: ${decodedCategory} `
+  }
   return (
     <div className="flex flex-col gap-4">
       <div className="mb-4">
@@ -22,7 +27,7 @@ export default function QuestionCard({
           Question {currentIndex + 1} of {total}
         </h2>
         <p className="text-sm md:text-base lg:text-lg text-gray-600">
-          {question.category}
+          {decodedCategory}
         </p>
         <DifficultyStars level={question.difficulty} />
       </div>
