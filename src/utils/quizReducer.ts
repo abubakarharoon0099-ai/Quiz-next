@@ -1,3 +1,4 @@
+// src/utils/quizReducer.ts
 import { QuizState, QuizAction } from "@/types/quizState"
 
 export const initialState: QuizState = {
@@ -6,6 +7,8 @@ export const initialState: QuizState = {
   attempted: 0,
   selectedOptionId: null,
   showResult: false,
+  loading: true,     
+  error: null         
 }
 
 export function quizReducer(state: QuizState, action: QuizAction): QuizState {
@@ -18,6 +21,7 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         attempted: state.attempted + 1,
         score: action.isCorrect ? state.score + 1 : state.score,
       }
+
     case "NEXT":
       return {
         ...state,
@@ -25,10 +29,19 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         currentIndex: state.currentIndex + 1,
         showResult: state.currentIndex + 1 >= action.total,
       }
-    case "RESTART": // ✅ reset to initial
+
+    case "RESTART":
       return { ...initialState }
+
     case "HYDRATE":
       return { ...state, ...action.payload }
+
+    case "SET_LOADING":  
+      return { ...state, loading: action.loading }
+
+    case "SET_ERROR":     
+      return { ...state, error: action.error }
+
     default:
       return state
   }

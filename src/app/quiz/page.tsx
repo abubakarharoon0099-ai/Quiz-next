@@ -10,56 +10,67 @@ import ProgressBar from "@/components/ProgressBar"
 
 export default function QuizPage() {
   const [questions, setQuestions] = useState<PreparedQuestion[]>([])
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
+
   const [state, dispatch] = useReducer(quizReducer, initialState)
 
-  useEffect(() => {
+useEffect(() => {
+  try {
     const savedState = localStorage.getItem("quizState")
-    if (savedState) {
-      dispatch({ type: "HYDRATE", payload: JSON.parse(savedState) })
-    } else {
-      dispatch({ type: "RESTART" })
-    }
-  }, [])
 
+    if (savedState) {
+      const parsed = JSON.parse(savedState)
+      if (parsed && typeof parsed === "object") {
+        dispatch({ type: "HYDRATE", payload: parsed })
+        return
+      }
+    }
+
+    dispatch({ type: "RESTART" })
+  } catch (err) {
+    console.error("Failed to restore quiz state:", err)
+    dispatch({ type: "RESTART" })
+  }
+}, [])
+
+  
   useEffect(() => {
     if (state.attempted > 0 || state.currentIndex > 0) {
       localStorage.setItem("quizState", JSON.stringify(state))
     }
   }, [state])
 
-  const fetchQuestions = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const res = await fetch("/api/questions")
-      if (!res.ok) throw new Error("Failed to fetch questions")
-      const data: Question[] = await res.json()
-      setQuestions(prepareQuestions(data))
-    } catch (err: any) {
-      console.error(err)
-      setError(err.message || "Something went wrong")
-    } finally {
-      setLoading(false)
-    }
+const fetchQuestions = async () => {
+  dispatch({ type: "SET_LOADING", loading: true })
+  dispatch({ type: "SET_ERROR", error: null })
+  try {
+    const res = await fetch("/api/questions")
+    if (!res.ok) throw new Error("Failed to fetch questions")
+    const data: Question[] = await res.json()
+    setQuestions(prepareQuestions(data))
+  } catch (err: any) {
+    console.error(err)
+    dispatch({ type: "SET_ERROR", error: err.message || "Something went wrong" })
+  } finally {
+    dispatch({ type: "SET_LOADING", loading: false })
   }
+}
+
 
   useEffect(() => {
     fetchQuestions()
   }, [])
 
-  if (loading) {
+ if (state.loading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
       </div>
     )
   }
-  if (error) {
+  if (state.error) {
     return (
       <div className="flex flex-col items-center justify-center h-screen gap-4">
-        <p className="text-red-600 font-semibold text-lg">{error}</p>
+        <p className="text-red-600 font-semibold text-lg">{state.error}</p>
         <button
           onClick={fetchQuestions}
           className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
