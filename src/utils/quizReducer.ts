@@ -6,8 +6,8 @@ export const initialState: QuizState = {
   attempted: 0,
   selectedOptionId: null,
   showResult: false,
-  loading: false,   // ✅ add
-  error: null       // ✅ add
+  loading: false,   
+  error: null       
 }
 
 export function quizReducer(state: QuizState, action: QuizAction): QuizState {
@@ -31,9 +31,9 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
       return { ...initialState }
     case "HYDRATE":
       return { ...state, ...action.payload }
-    case "SET_LOADING":   // ✅ handle
+    case "SET_LOADING":   
       return { ...state, loading: action.loading }
-    case "SET_ERROR":     // ✅ handle
+    case "SET_ERROR":     
       return { ...state, error: action.error }
     default:
       return state
