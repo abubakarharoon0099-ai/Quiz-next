@@ -13,15 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Expertizo Quiz App",
-  description: "Expertizo Quiz App built with Next.js and TypeScript",
+  title: "Zoombox Quiz App",
+  description: "Zoombox Quiz App built with Next.js and TypeScript",
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" }, 
-      { url: "/favicon.png", type: "image/png" }, 
+      { url: "/zoombox-logo.png", sizes: "any" }, 
+      { url: "/zoombox-logo.png", type: "image/png" }, 
     ],
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    shortcut: "/zoombox-logo.p.png",
+    apple: "/zoombox-logo.png",
   },
 };
 

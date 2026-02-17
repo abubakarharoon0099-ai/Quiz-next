@@ -8,15 +8,15 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-2 gap-6">
       <img
-        src="/Expertizo-logo.png"
-        alt="Expertizo Logo"
+        src="/zoom box logo .png"
+        alt="zoombox Logo"
         width={300}
         height={100}
         className="w-auto h-auto max-w-[300px]"
       />
 
       <h1 className="text-4xl font-bold text-center mb-4">
-        Welcome to Expertizo Quiz Challenge
+        Welcome to Zoombox Quiz Challenge
       </h1>
 
       <button
