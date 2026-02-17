@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-2 gap-6">
       <img
-        src="/zoom box logo .png"
+        src="/zoombox-logo.png"
         alt="zoombox Logo"
         width={300}
         height={100}
