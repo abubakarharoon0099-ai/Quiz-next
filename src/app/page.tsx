@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function HomePage() {
@@ -7,13 +7,7 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-2 gap-6">
-      <img
-        src="/zoombox-logo.png"
-        alt="zoombox Logo"
-        width={300}
-        height={100}
-        className="w-auto h-auto max-w-[300px]"
-      />
+     <Image src="/zoombox-logo.png" width={500} height={300} alt="Quiz" />
 
       <h1 className="text-4xl font-bold text-center mb-4">
         Welcome to Zoombox Quiz Challenge
